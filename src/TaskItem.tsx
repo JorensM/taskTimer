@@ -1,5 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react'
-import { getTimeRemaining } from './util'
+import { ChangeEvent, useState } from 'react'
 import useTimeRemaining from './useTimeRemaining'
 
 export type Task = {

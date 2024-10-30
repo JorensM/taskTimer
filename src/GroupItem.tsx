@@ -1,6 +1,5 @@
 import { ChangeEvent, PropsWithChildren, useState, KeyboardEvent } from 'react'
-import { Group, Task } from './TaskItem'
-import { getTimeRemaining } from './util';
+import { Group } from './TaskItem'
 import useTimeRemaining from './useTimeRemaining';
 
 type GroupItemProps = {
@@ -31,6 +30,12 @@ export default function GroupItem( { group, onChange, onDelete, children }: Prop
         })
     }
 
+    const onDeleteButtonClick = () => {
+        if(onDelete) {
+            onDelete(group.id);
+        }
+    }
+
     const onKeyPressed = (key: string, callback: () => void) => {
         return (e: KeyboardEvent<HTMLInputElement>) => {
             if(e.key === key) {
@@ -49,7 +54,11 @@ export default function GroupItem( { group, onChange, onDelete, children }: Prop
         <li className='flex flex-col gap-2'>
               {isEditing ? 
                 <div className='flex flex-col gap-1' onKeyPress={onKeyPressed('Enter', onSave)}>
-                    <input value={groupName} onChange={onGroupNameChange} />
+                    <div className='flex'>
+                        <input value={groupName} onChange={onGroupNameChange} />
+                        <button className='text-red-400' onClick={onDeleteButtonClick}>Delete</button>
+                    </div>
+                        
                     <input type='datetime-local' value={dueDate} onChange={onDateChange} />
                 </div>
                 :
